@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+<h2>Profil</h2>
+<p>Username: <%= user.username %></p>
+<p>Rol: <%= user.role %></p>
+<% if (user.role === 'admin') { %>
+  <h3>Mening qo‘shgan kategoriyalarim:</h3>
+  <ul>
+    <% user.categories.forEach(cat => { %>
+      <li><%= cat.name %></li>
+    <% }) %>
+  </ul>
+  <h3>Mening qo‘shgan mashinalarim:</h3>
+  <ul>
+    <% user.cars.forEach(car => { %>
+      <li><%= car.name %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<a href="/change-password">Parolni o‘zgartirish</a>
+<%- include('partials/footer') %>

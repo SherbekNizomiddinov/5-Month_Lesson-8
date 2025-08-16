@@ -1,0 +1,14 @@
+<nav>
+  <% if (user) { %>
+    <a href="/profile">Profil</a>
+    <a href="/auth/logout">Chiqish</a>
+    <% if (user.role === 'admin') { %>
+      <a href="/admin/categories">Kategoriyalar boshqarish</a>
+      <a href="/cars">Mashinalar qo'shish</a>
+    <% } %>
+  <% } else { %>
+    <a href="/auth/register">Ro'yxatdan o'tish</a>
+    <a href="/auth/login">Kirish</a>
+  <% } %>
+  <a href="/cars">Mashinalar</a>
+</nav>
