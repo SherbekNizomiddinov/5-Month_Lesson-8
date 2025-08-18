@@ -2,13 +2,12 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O'zbek Mashinalari Sotib Olish Sayti</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title>Home</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <%- include('partials/header') %>
-  <h1>Xush kelibsiz! Mashinalarni ko'rish uchun <a href="/cars">bu yerga bosing</a>.</h1>
-  <%- include('partials/footer') %>
+  <h1>Xush kelibsiz: <%= user.username %>!</h1>
+  <a href="/cars/models">Mashinalar Ro'yhati</a> | 
+  <a href="/logout">Hisobdan Chiqish</a>
 </body>
 </html>
