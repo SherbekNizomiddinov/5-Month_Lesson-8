@@ -1,0 +1,19 @@
+<%- include("../layout/header") %>
+
+<h2>Register</h2>
+
+<% if (error) { %>
+  <p style="color:red;"><%= error %></p>
+<% } %>
+
+<form action="/register" method="POST">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required><br><br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required><br><br>
+
+  <button type="submit">Register</button>
+</form>
+
+<p>Allaqachon akkauntingiz bormi? <a href="/login">Login</a></p>

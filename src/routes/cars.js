@@ -1,33 +1,22 @@
 import express from "express";
-import Car from "../models/Car.js";
+import { isAuthenticated } from "../middleware.js";
 
 const router = express.Router();
 
-// Barcha modellari listini ko'rsatish
-router.get("/models", isAuthenticated, async (req, res) => {
-  const brands = await Car.aggregate([
-    { $group: { _id: "$brand", cars: { $push: "$$ROOT" } } }
-  ]);
-  res.render("cars/models", { brands });
+router.get("/", (req, res) => {
+  res.render("cars/index", { title: "Cars" });
 });
 
-// Bitta modelga oid mashinalarni ko'rsatish
-router.get("/models/:brand", isAuthenticated, async (req, res) => {
-  const brand = req.params.brand;
-  const cars = await Car.find({ brand });
-  res.render("cars/brand", { brand, cars });
-});
-
-// Admin mashina qo'shish sahifasi
 router.get("/add", isAuthenticated, (req, res) => {
-  res.render("cars/add");
+  res.render("cars/add", { title: "Add Car" });
 });
 
-// Mashina qo'shish POST
-router.post("/add", isAuthenticated, async (req, res) => {
-  const { brand, model, year, price, image } = req.body;
-  await Car.create({ brand, model, year, price, image });
-  res.redirect("/cars/models");
+router.get("/filter", isAuthenticated, (req, res) => {
+  res.render("cars/filter", { title: "Filter Cars" });
+});
+
+router.get("/models", isAuthenticated, (req, res) => {
+  res.render("cars/models", { title: "Car Models" });
 });
 
 export default router;
