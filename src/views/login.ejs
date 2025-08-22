@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tizimga Kirish</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-out, float 6s ease-in-out infinite;
+            position: relative;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, rgba(78, 115, 223, 0.9) 0%, rgba(34, 74, 190, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .auth-header h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-header p {
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .auth-body {
+            padding: 30px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 8px;
+        }
+
+        .input-group-text {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #4e73df;
+            font-weight: 500;
+            border-radius: 12px 0 0 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0 12px 12px 0;
+            padding: 12px 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #2d3748;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #4e73df;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            border: none;
+            padding: 14px 20px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #224abe 0%, #4e73df 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(78, 115, 223, 0.3);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline-dark {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #2d3748;
+            font-weight: 600;
+            border-radius: 12px;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline-dark:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
+            border: none;
+            padding: 14px 20px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #13855c 0%, #1cc88a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(28, 200, 138, 0.3);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #4a5568;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: #a0aec0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .step.active .step-number {
+            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(78, 115, 223, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .step.completed .step-number {
+            background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(28, 200, 138, 0.3);
+        }
+
+        .step-text {
+            font-size: 0.8rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .step.active .step-text {
+            color: #4e73df;
+            font-weight: 700;
+        }
+
+        .step.completed .step-text {
+            color: #1cc88a;
+            font-weight: 600;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step.completed::after {
+            background: linear-gradient(90deg, #1cc88a, rgba(28, 200, 138, 0.3));
+        }
+
+        .password-toggle {
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #4e73df;
+            transition: all 0.3s ease;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .password-toggle:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #224abe;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            margin-bottom: 20px;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .alert-info {
+            background: rgba(54, 162, 235, 0.1);
+            color: #2563eb;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border-left: 4px solid #22c55e;
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border-left: 4px solid #ef4444;
+        }
+
+        a {
+            color: #4e73df;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #224abe;
+            text-shadow: 0 2px 4px rgba(78, 115, 223, 0.2);
+        }
+
+        .form-text {
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        .form-text a {
+            color: #4e73df;
+            font-weight: 600;
+        }
+
+        .text-muted {
+            color: #9ca3af !important;
+        }
+
+        .fw-bold {
+            font-weight: 700 !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .auth-container {
+                margin: 10px;
+                border-radius: 20px;
+            }
+            
+            .auth-header {
+                padding: 25px 20px;
+            }
+            
+            .auth-body {
+                padding: 25px 20px;
+            }
+            
+            .step-indicator {
+                margin-bottom: 20px;
+            }
+            
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+            
+            .step-text {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Loading Animation */
+        .btn-primary.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-primary.loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Login Sahifasi -->
+    <div class="auth-container" id="loginContainer">
+        <div class="auth-header">
+            <h3><i class="fas fa-sign-in-alt me-2"></i>Tizimga Kirish</h3>
+            <p class="mb-0">Hisobingizga xush kelibsiz</p>
+        </div>
+        <div class="auth-body">
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Elektron Pochta</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="example@email.com" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Parol</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Parolingizni kiriting" required>
+                        <span class="input-group-text password-toggle" id="passwordToggle">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fas fa-sign-in-alt me-2"></i>Tizimga Kirish
+                </button>
+            </form>
+            
+            <div class="text-center mt-3">
+                <!-- "Parolni unutdingizmi?" tugmasi - forgot-password sahifasiga o'tadi -->
+                <a href="#" id="forgotPasswordLink" class="text-decoration-none">Parolni unutdingizmi?</a>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="/register" class="text-decoration-none">Yangi hisob ochish</a>
+            </div>
+            
+            <div class="divider">
+                <span>Yoki</span>
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-outline-dark w-100">
+                    <i class="fab fa-google me-2"></i>Google bilan kirish
+                </button>
+            </div>
+        </div>
+        <div class="footer">
+            <p class="mb-0">© 2023 Barcha huquqlar himoyalangan</p>
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    </script>
+</body>
+</html>
